@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe Visita Técnica - SE Guadalupe</title>
+    <title>Informe Técnico - Ampliación SE Guadalupe</title>
     <style>
         :root {
-            --primary: #0056b3; /* Azul Ingeniería */
-            --secondary: #2c3e50; /* Gris oscuro */
-            --accent: #e7f1ff; /* Fondo claro */
-            --text: #333;
+            --primary: #004d99; /* Azul Corporativo */
+            --secondary: #333333; /* Gris oscuro */
+            --accent: #f4f4f4; /* Fondo claro */
+            --highlight: #d9534f; /* Rojo para alertas */
+            --text: #2c3e50;
             --white: #ffffff;
         }
 
         body {
             margin: 0;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #1a1a1a;
+            background-color: #222;
             color: var(--text);
-            overflow: hidden; /* Evitar scroll */
+            overflow: hidden;
         }
 
-        /* Contenedor Principal de Diapositivas */
+        /* Contenedor Principal */
         .slide-container {
             width: 100vw;
             height: 100vh;
@@ -32,7 +33,7 @@
             align-items: center;
         }
 
-        /* Estilo de cada Diapositiva */
+        /* Diapositivas */
         .slide {
             position: absolute;
             top: 0;
@@ -43,10 +44,9 @@
             box-sizing: border-box;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+            transition: opacity 0.5s ease-in-out;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
         }
 
         .slide.active {
@@ -55,298 +55,244 @@
             z-index: 1;
         }
 
-        /* Encabezados */
+        /* Tipografía */
         h1 {
             color: var(--primary);
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
             border-bottom: 3px solid var(--primary);
             padding-bottom: 10px;
-        }
-
-        h2 {
-            color: var(--secondary);
-            font-size: 1.8rem;
             margin-top: 0;
         }
 
-        h3 {
-            color: var(--primary);
-            font-size: 1.4rem;
-        }
+        h2 { color: var(--secondary); font-size: 1.5rem; }
+        h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 5px; }
+        p, li { font-size: 1.1rem; line-height: 1.5; }
 
-        /* Contenido y Listas */
-        .content {
-            flex-grow: 1;
-            overflow-y: auto;
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        ul li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 15px;
-        }
-
-        ul li::before {
-            content: "➤";
-            color: var(--primary);
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
+        /* Estructura de Contenido */
         .two-columns {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 0.8fr; /* Texto más ancho que imagen */
             gap: 40px;
-            height: 80%;
-        }
-
-        .highlight-box {
-            background-color: var(--accent);
-            padding: 20px;
-            border-left: 5px solid var(--primary);
-            border-radius: 4px;
+            height: 75%;
             margin-top: 20px;
         }
 
-        .alert-text {
-            color: #d9534f;
+        ul { list-style: none; padding: 0; }
+        ul li { position: relative; padding-left: 20px; margin-bottom: 10px; }
+        ul li::before { content: "•"; color: var(--primary); font-weight: bold; position: absolute; left: 0; font-size: 1.5em; line-height: 1; }
+
+        /* Espacios para Imágenes (Placeholders) */
+        .img-placeholder {
+            background-color: #eee;
+            border: 3px dashed #aaa;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            height: 100%;
+            min-height: 300px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .img-placeholder span {
             font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Cajas de Alerta/Nota */
+        .alert-box {
+            background-color: #ffebee;
+            border-left: 5px solid var(--highlight);
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
         }
 
         /* Navegación */
         .nav-buttons {
             position: absolute;
-            bottom: 20px;
-            right: 40px;
+            bottom: 30px;
+            right: 50px;
             z-index: 100;
         }
-
         button {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 4px;
             margin-left: 10px;
-            transition: background 0.3s;
         }
+        button:hover { background-color: #003366; }
+        .slide-number { position: absolute; bottom: 30px; left: 50px; color: #888; }
 
-        button:hover {
-            background-color: var(--secondary);
-        }
-
-        .slide-number {
-            position: absolute;
-            bottom: 20px;
-            left: 40px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Tablas */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: var(--primary);
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        /* Portada */
-        .title-slide {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-        .title-slide h1 {
-            border: none;
-            font-size: 3.5rem;
-        }
+        /* Estilo Tabla */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
     </style>
 </head>
 <body>
 
 <div class="slide-container">
-    <div class="slide title-slide active">
-        <h1>Informe de Visita Técnica</h1>
-        <h2>Ampliación de Transformación SE Guadalupe 220/60/10 kV</h2>
-        <p><strong>Fecha de Visita:</strong> 22/10/2025</p>
-        <p><strong>Ubicación:</strong> Subestación Guadalupe (ISA REP)</p>
-        <div style="margin-top: 50px;">
-            <p>Elaborado para: China Energy Engineering Corporation (CEEC)</p>
+
+    <div class="slide active" style="text-align: center; justify-content: center;">
+        <h1 style="border:none; font-size: 3rem;">Informe Técnico de Inspección</h1>
+        <h2>Ampliación SE Guadalupe: Nuevo Transformador 50 MVA</h2>
+        <p><strong>Evaluación de Equipamiento Existente y Adecuaciones Civiles</strong></p>
+        <div style="margin: 40px auto; width: 60%; height: 200px;" class="img-placeholder">
+            <span>[FOTO PANORÁMICA SUBESTACIÓN]</span>
+            <small>Insertar foto general del patio de llaves</small>
         </div>
+        <p style="font-size: 0.9rem; color: #666;">Elaborado para: China Energy Engineering Corporation (CEEC)</p>
     </div>
 
     <div class="slide">
-        <h1>Objetivos y Alcance</h1>
+        <h1>1. Contexto del Proyecto</h1>
         <div class="two-columns">
             <div>
-                <h3>Objetivo de la Visita</h3>
+                <h3>Objetivo Principal</h3>
+                <p>Validar la aptitud técnica del equipamiento actual para soportar el cambio del transformador T13-261 (30 MVA) por una nueva unidad de <strong>50 MVA</strong>.</p>
+                
+                <h3>Desafíos Identificados</h3>
                 <ul>
-                    <li>Validar condiciones para el desmontaje del T13-261 y montaje del nuevo transformador (50 MVA).</li>
-                    <li>Verificar estado operativo del equipamiento primario existente (Interruptor 220kV).</li>
-                    <li>Confirmar rutas de canalización y espacios para tableros y celdas.</li>
+                    <li>Gestión de corrientes de inserción (Inrush).</li>
+                    <li>Coordinación de protecciones con mayores exigencias.</li>
+                    <li>Cumplimiento normativo COES (PR-40).</li>
+                    <li>Estado de la infraestructura civil (cárcamos).</li>
                 </ul>
             </div>
-            <div>
-                <h3>Alcance del Proyecto (Resumen)</h3>
-                <ul>
-                    <li><strong>Primario:</strong> Reemplazo de Transformador, PTs 10kV, Pararrayos, Cable de potencia.</li>
-                    <li><strong>Secundario:</strong> Mando sincronizado, Integración de protecciones, Nuevo Tablero Autosoportado.</li>
-                    <li><strong>Civil:</strong> Muro cortafuego, cimentaciones y adecuación de cárcamos.</li>
-                </ul>
+            <div class="img-placeholder">
+                <span>[FOTO DEL TRANSFORMADOR ACTUAL]</span>
+                <small>Insertar foto del T13-261 existente</small>
             </div>
         </div>
     </div>
 
     <div class="slide">
-        <h1>Desarrollo de la Visita</h1>
-        <p>Se realizaron actividades de inspección visual, levantamiento fotográfico y revisión de placas sin afectar la continuidad operativa.</p>
-        
-        <table style="font-size: 0.9em;">
+        <h1>2. Evaluación: Interruptor de Potencia 220 kV</h1>
+        <div class="two-columns">
+            <div>
+                <h3>Datos de Placa Levantados</h3>
+                <ul>
+                    <li><strong>Marca/Modelo:</strong> ABB HPL 245-25B1</li>
+                    <li><strong>Año Fabricación:</strong> 1995 (30 años de antigüedad)</li>
+                    <li><strong>Tecnología:</strong> Gas SF6 (Tipo Puffer)</li>
+                    <li><strong>Mecanismo:</strong> Resorte (Spring), Operación Tripolar.</li>
+                </ul>
+                <div class="alert-box">
+                    <strong>DIAGNÓSTICO CRÍTICO:</strong> 
+                    El equipo presenta desgaste mecánico por fatiga en resortes y riesgo de fugas en sellos de SF6. No apto para reusar.
+                </div>
+            </div>
+            <div class="img-placeholder">
+                <span>[FOTO DE PLACA DEL INTERRUPTOR]</span>
+                <small>Insertar foto de la placa metálica ABB del año 1995 </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h1>2.1 Justificación de Reemplazo (Mando Sincronizado)</h1>
+        <div class="two-columns">
+            <div>
+                <h3>Requisito Técnico (CIGRE TB 757)</h3>
+                <p>El nuevo transformador de 50 MVA generará corrientes de <em>Inrush</em> que pueden causar huecos de tensión severos.</p>
+                <ul>
+                    <li>Para mitigar esto, se requiere <strong>Mando Sincronizado (Point-on-Wave)</strong>.</li>
+                    <li>Este sistema exige un interruptor con <strong>Operación de Polo Independiente (IPO)</strong>.</li>
+                </ul>
+                <p><strong>El interruptor actual es Tripolar (Cierre simultáneo), por lo que es físicamente imposible implementar esta solución.</strong></p>
+            </div>
+            <div class="img-placeholder">
+                <span>[GRÁFICO CURVA INRUSH / CORE FLUX]</span>
+                <small>Insertar el gráfico de flujo magnético vs corriente inrush del informe </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h1>3. Evaluación: Relé de Protección (ABB RET670)</h1>
+        <div class="two-columns">
+            <div>
+                <h3>Problemas Detectados</h3>
+                <ul>
+                    <li><strong>Latencia de Arranque:</strong> Tiempos excesivos de reinicio tras cortes de energía. Riesgo de "puntos ciegos" sin protección.</li>
+                    <li><strong>Degradación Hardware:</strong> Fallas en fuentes de alimentación (capacitores envejecidos).</li>
+                    <li><strong>Obsolescencia:</strong> Firmware antiguo (Ver 1.x), soporte limitado.</li>
+                </ul>
+                <div class="alert-box">
+                    <strong>ACCIÓN:</strong> Se requiere reemplazo total por una unidad de nueva generación para garantizar disponibilidad según COES.
+                </div>
+            </div>
+            <div class="img-placeholder">
+                <span>[FOTO DEL RELÉ EN TABLERO]</span>
+                <small>Insertar foto del relé ABB RET670 actual en sala de control</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h1>4. Normativa y Obras Civiles</h1>
+        <div class="two-columns">
+            <div>
+                <h3>Registrador de Fallas (COES PR-40)</h3>
+                <p>Para transformadores &ge; 50 MVA es <strong>OBLIGATORIO</strong> contar con un Registrador de Fallas dedicado.</p>
+                
+                <h3>Infraestructura Civil</h3>
+                <ul>
+                    <li><strong>Hallazgo:</strong> Cárcamos de cables sobrecargados en nivel 10kV.</li>
+                    <li><strong>Solución:</strong> Construcción de nuevas canalizaciones y un nuevo tablero MK <em>antes</em> del desmontaje para reducir tiempo de parada.</li>
+                </ul>
+            </div>
+            <div class="img-placeholder">
+                <span>[FOTO DE CÁRCAMOS / CANALETAS]</span>
+                <small>Insertar foto mostrando la saturación de cables o el deterioro </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h1>5. Conclusiones y Resumen de Cambios</h1>
+        <table style="font-size: 1.1rem;">
             <thead>
                 <tr>
-                    <th>Ubicación</th>
                     <th>Equipo</th>
-                    <th>Hallazgo Principal</th>
+                    <th>Estado Actual</th>
+                    <th>Acción Requerida</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Patio 220 kV</td>
-                    <td>Interruptor T13-261</td>
-                    <td>Tecnología SF6 antigua, mando tripolar, >20 años de servicio.</td>
+                    <td><strong>Interruptor 220kV</strong></td>
+                    <td>Antiguo (1995), Tripolar</td>
+                    <td><strong>REEMPLAZAR</strong> por uno con Polo Independiente (IPO).</td>
                 </tr>
                 <tr>
-                    <td>Sala de Control</td>
-                    <td>Relé ABB RET 670</td>
-                    <td>Antigüedad >14 años, generación anterior, riesgo de obsolescencia.</td>
+                    <td><strong>Relé Protección</strong></td>
+                    <td>Falla arranque, Obsoleto</td>
+                    <td><strong>REEMPLAZAR</strong> por nueva tecnología.</td>
                 </tr>
                 <tr>
-                    <td>Sala de Celdas</td>
-                    <td>Canalizaciones 10 kV</td>
-                    <td>Cárcamos sobrecargados y tapas deterioradas.</td>
+                    <td><strong>Registrador Fallas</strong></td>
+                    <td>No existente para esta capacidad</td>
+                    <td><strong>IMPLEMENTAR</strong> (Norma COES PR-40).</td>
+                </tr>
+                 <tr>
+                    <td><strong>Tablero MK</strong></td>
+                    <td>Ubicación a modificar</td>
+                    <td><strong>CONSTRUIR NUEVO</strong> anticipadamente.</td>
                 </tr>
             </tbody>
         </table>
-        <div class="highlight-box">
-            <strong>Nota:</strong> No se realizó intervención intrusiva en los equipos.
-        </div>
-    </div>
-
-    <div class="slide">
-        <h1>Evaluación: Interruptor de Potencia 220 kV</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Diagnóstico de Estado</h3>
-                <ul>
-                    <li><strong>Antigüedad:</strong> Supera los 20 años (Límite de vida útil SF6 convencional).</li>
-                    <li><strong>Operación:</strong> Mecanismo Tripolar (un solo mando).</li>
-                    <li><strong>Riesgos:</strong> Fatiga en resortes, fugas potenciales de SF6 y alta probabilidad de <em>restrikes</em>.</li>
-                </ul>
-                <p class="alert-text">CONCLUSIÓN: El equipo NO es apto para el nuevo proyecto.</p>
-            </div>
-            <div>
-                <h3>Incompatibilidad Técnica</h3>
-                <p>El nuevo transformador requiere <strong>Mando Sincronizado</strong>. El interruptor actual falla en:</p>
-                <ul>
-                    <li>No permite operación independiente por polo (es tripolar).</li>
-                    <li>Alta dispersión en tiempos de cierre.</li>
-                    <li>No garantiza cierres precisos en el "cruce por cero".</li>
-                </ul>
-                <div style="background:#eee; height:150px; display:flex; align-items:center; justify-content:center; border:2px dashed #999;">
-                    [FOTO DEL INTERRUPTOR / PLACA AQUÍ]
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <h1>Evaluación: Relé de Protección (ABB RET670)</h1>
-        <div class="content">
-            <p>Se recomienda la sustitución del relé diferencial existente (2011) por degradación electrónica:</p>
-            
-            <div style="display: flex; gap: 20px;">
-                <div class="highlight-box" style="flex:1;">
-                    <h3>1. Latencia de Arranque</h3>
-                    <p>Tras cortes de energía, presenta tiempos excesivos de reinicio y fallas en reconocimiento de módulos I/O. Esto genera "puntos ciegos" sin protección.</p>
-                </div>
-                <div class="highlight-box" style="flex:1;">
-                    <h3>2. Degradación de Fuentes</h3>
-                    <p>Fuentes switching inestables causan fallas intermitentes y errores de watchdog debido al envejecimiento de capacitores.</p>
-                </div>
-            </div>
-
-            <ul>
-                <li><strong>Obsolescencia:</strong> Firmware generación 1.x con soporte limitado.</li>
-                <li><strong>Ciclo de Vida:</strong> Superó el umbral recomendado de 12 años para equipos críticos.</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="slide">
-        <h1>Infraestructura y Cumplimiento Normativo</h1>
-        
-        <h3>Normativa COES (PR-40 y PR-21)</h3>
-        <ul>
-            <li><strong>Registrador de Fallas:</strong> Es OBLIGATORIO instalar un equipo dedicado al superar los 50 MVA de potencia.</li>
-            <li><strong>Confiabilidad:</strong> Todo elemento crítico (interruptor) asociado a un aumento de capacidad debe cumplir estándares actuales.</li>
-        </ul>
-
-        <h3>Adecuaciones Civiles e Implementación</h3>
-        <ul>
-            <li><strong>Paralelismo:</strong> Esquema Maestro-Seguidor validado con TAPCON existentes.</li>
-            <li><strong>Cárcamos de Cables:</strong> Sobrecargados. Se requiere ampliación constructiva.</li>
-            <li><strong>Estrategia (Nuevo Tablero MK):</strong> Se debe construir el nuevo MK y canalizaciones <em>antes</em> del montaje del transformador para minimizar tiempos de parada.</li>
-        </ul>
-    </div>
-
-    <div class="slide">
-        <h1>Conclusiones y Recomendaciones</h1>
-        <div class="highlight-box" style="background-color: #e8f5e9; border-left-color: #28a745;">
-            <h3>Viabilidad Técnica</h3>
-            <p>El proyecto es técnicamente viable bajo la condición de ejecutar las actualizaciones de equipamiento identificadas.</p>
-        </div>
-
-        <div class="two-columns" style="margin-top: 20px;">
-            <div>
-                <h3>Intervenciones Mandatorias</h3>
-                <ul>
-                    <li><strong>Reemplazo del Interruptor 220kV:</strong> Imperativo por seguridad y requisito de mando sincronizado.</li>
-                    <li><strong>Nuevo Relé Diferencial:</strong> Necesario por inestabilidad del existente.</li>
-                    <li><strong>Registrador de Fallas:</strong> Exigencia regulatoria.</li>
-                </ul>
-            </div>
-            <div>
-                <h3>Beneficios del Cambio</h3>
-                <ul>
-                    <li>Garantía de operación controlada (Inrush).</li>
-                    <li>Reducción de OPEX (Mantenimiento).</li>
-                    <li>Cumplimiento de normativa de red (Grid Code).</li>
-                </ul>
-            </div>
+        <div style="margin-top: 20px; text-align: center; color: var(--primary); font-weight: bold;">
+            EL PROYECTO ES VIABLE EJECUTANDO ESTAS ADECUACIONES.
         </div>
     </div>
 
@@ -355,26 +301,22 @@
         <button onclick="nextSlide()">Siguiente ❯</button>
     </div>
     <div class="slide-number" id="slideNum">1 / 7</div>
+
 </div>
 
 <script>
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
-    const slideNumberDisplay = document.getElementById('slideNum');
-    const totalSlides = slides.length;
+    const slideNum = document.getElementById('slideNum');
 
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            if (i === index) {
-                slide.classList.add('active');
-            }
-        });
-        slideNumberDisplay.textContent = `${index + 1} / ${totalSlides}`;
+    function showSlide(n) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[n].classList.add('active');
+        slideNum.textContent = `${n + 1} / ${slides.length}`;
     }
 
     function nextSlide() {
-        if (currentSlide < totalSlides - 1) {
+        if (currentSlide < slides.length - 1) {
             currentSlide++;
             showSlide(currentSlide);
         }
@@ -387,17 +329,11 @@
         }
     }
 
-    // Navegación con teclado
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "ArrowRight") {
-            nextSlide();
-        } else if (event.key === "ArrowLeft") {
-            prevSlide();
-        }
+    // Teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowRight") nextSlide();
+        if (e.key === "ArrowLeft") prevSlide();
     });
-
-    // Inicializar
-    showSlide(currentSlide);
 </script>
 
 </body>
