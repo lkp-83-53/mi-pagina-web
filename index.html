@@ -1,340 +1,306 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <title>Presentación Proyecto AMP23</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe Técnico - Ampliación SE Guadalupe</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css" id="theme">
+
     <style>
         :root {
-            --primary: #004d99; /* Azul Corporativo */
-            --secondary: #333333; /* Gris oscuro */
-            --accent: #f4f4f4; /* Fondo claro */
-            --highlight: #d9534f; /* Rojo para alertas */
-            --text: #2c3e50;
-            --white: #ffffff;
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #222;
-            color: var(--text);
-            overflow: hidden;
-        }
-
-        /* Contenedor Principal */
-        .slide-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            background-color: var(--white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Diapositivas */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 40px 80px;
-            box-sizing: border-box;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 1;
-        }
-
-        /* Tipografía */
-        h1 {
-            color: var(--primary);
-            font-size: 2.2rem;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-
-        h2 { color: var(--secondary); font-size: 1.5rem; }
-        h3 { color: var(--primary); font-size: 1.2rem; margin-bottom: 5px; }
-        p, li { font-size: 1.1rem; line-height: 1.5; }
-
-        /* Estructura de Contenido */
-        .two-columns {
-            display: grid;
-            grid-template-columns: 1fr 0.8fr; /* Texto más ancho que imagen */
-            gap: 40px;
-            height: 75%;
-            margin-top: 20px;
-        }
-
-        ul { list-style: none; padding: 0; }
-        ul li { position: relative; padding-left: 20px; margin-bottom: 10px; }
-        ul li::before { content: "•"; color: var(--primary); font-weight: bold; position: absolute; left: 0; font-size: 1.5em; line-height: 1; }
-
-        /* Espacios para Imágenes (Placeholders) */
-        .img-placeholder {
-            background-color: #eee;
-            border: 3px dashed #aaa;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            height: 100%;
-            min-height: 300px;
-            text-align: center;
-            padding: 20px;
+            --brand-blue: #18458b;
+            --brand-cyan: #00aeef;
+            --bg-grey: #f4f6f8;
+            --header-height: 140px; /* Altura para los logos */
         }
         
-        .img-placeholder span {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        /* Cajas de Alerta/Nota */
-        .alert-box {
-            background-color: #ffebee;
-            border-left: 5px solid var(--highlight);
-            padding: 15px;
-            margin-top: 10px;
-            font-size: 0.95rem;
-        }
-
-        /* Navegación */
-        .nav-buttons {
+        .reveal { font-family: 'Arial', sans-serif; color: #333; }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 { text-transform: none; font-weight: bold; color: var(--brand-blue); }
+        
+        /* --- LOGOS FIJOS --- */
+        .header-logos {
             position: absolute;
-            bottom: 30px;
-            right: 50px;
-            z-index: 100;
+            top: 10px; left: 0; width: 100%; height: var(--header-height);
+            padding: 0 40px; box-sizing: border-box; z-index: 1000;
+            pointer-events: none; display: flex; justify-content: space-between; align-items: flex-start; 
         }
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-left: 10px;
-        }
-        button:hover { background-color: #003366; }
-        .slide-number { position: absolute; bottom: 30px; left: 50px; color: #888; }
 
-        /* Estilo Tabla */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: var(--primary); color: white; }
+        .header-logos img {
+            height: 140px; width: auto; object-fit: contain;
+            background: rgba(255,255,255,0.9); border-radius: 5px;
+        }
+
+        /* --- SISTEMA DE LAYOUTS INDEPENDIENTES --- */
+        .slide-layout-base {
+            height: 100%; width: 100%; box-sizing: border-box;
+            display: flex; flex-direction: column;
+        }
+
+        /* 1. PORTADA PRINCIPAL */
+        .layout-portada {
+            padding-top: var(--header-height); 
+            justify-content: center; 
+        }
+
+        /* 2. ÍNDICE (AGENDA) */
+        .layout-indice {
+            padding-top: 150px; /* Ajusta aquí la altura del índice */
+            justify-content: flex-start; 
+        }
+
+        /* 3. PORTADAS DE SECCIÓN (Ej: TITULO AYAVIRI) */
+        .layout-titulo-seccion {
+            padding-top: 180px; /* Ajusta para centrar los títulos de sección */
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* 4. CONTENIDO GENERAL (Texto normal) */
+        .layout-contenido {
+            padding-top: 140px; /* Ajusta para que no choque con logos */
+            justify-content: flex-start;
+            text-align: left; padding-left: 20px; padding-right: 20px;
+        }
+
+        /* --- ESTILOS DE ENLACES DEL ÍNDICE --- */
+        /* Quitamos el subrayado de los links y hacemos que el bloque entero sea clickeable */
+        a.agenda-link {
+            text-decoration: none;
+            display: block;
+            color: inherit;
+            padding-top: 0px
+        }
+        
+        .agenda-box { 
+            background-color: var(--bg-grey); border: 1px solid #ddd; 
+            border-left: 8px solid var(--brand-blue); padding: 5px; 
+            margin-bottom: 5px; text-align: left; font-size: 0.85em; border-radius: 5px; 
+            transition: all 0.3s ease; /* Animación suave */
+            cursor: pointer;
+        }
+
+        /* Efecto al pasar el mouse por el índice */
+        .agenda-box:hover {
+            transform: translateX(10px); /* Se mueve a la derecha */
+            border-left-color: var(--brand-cyan); /* Cambia a celeste */
+            background-color: #eefbff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .agenda-code { font-weight: bold; color: var(--brand-blue); display: block; margin-bottom: 5px; }
+
+        /* --- OTROS ESTILOS --- */
+        .main-title { color: var(--brand-cyan); font-size: 1.2em; margin: 0; font-weight: bold; text-transform: uppercase; }
+        .sub-title { color: var(--brand-blue); font-size: 2.2em; border-bottom: 4px solid var(--brand-cyan); padding-bottom: 15px; margin-top: 10px; margin-bottom: 20px; line-height: 1.1; font-weight: bold; }
+        
+        .cover-details { background-color: var(--bg-grey); padding: 15px 20px; border-left: 10px solid var(--brand-blue); border-radius: 0 10px 10px 0; flex-shrink: 0; text-align: left; }
+
+        /* Estilo para listas dentro de las secciones */
+        ul.custom-list li { margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        
     </style>
 </head>
 <body>
 
-<div class="slide-container">
-
-    <div class="slide active" style="text-align: center; justify-content: center;">
-        <h1 style="border:none; font-size: 3rem;">Informe Técnico de Inspección</h1>
-        <h2>Ampliación SE Guadalupe: Nuevo Transformador 50 MVA</h2>
-        <p><strong>Evaluación de Equipamiento Existente y Adecuaciones Civiles</strong></p>
-        <div style="margin: 40px auto; width: 60%; height: 200px;" class="img-placeholder">
-            <span>[FOTO PANORÁMICA SUBESTACIÓN]</span>
-            <small>Insertar foto general del patio de llaves</small>
-        </div>
-        <p style="font-size: 0.9rem; color: #666;">Elaborado para: China Energy Engineering Corporation (CEEC)</p>
+    <div class="header-logos">
+        <img src="imagenes/Logo ISA Energía.jpg" alt="Logo ISA" onerror="this.style.display='none';">
+        <img src="imagenes/Logo Energy China.jpg" alt="Logo China" onerror="this.style.display='none';">
     </div>
 
-    <div class="slide">
-        <h1>1. Contexto del Proyecto</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Objetivo Principal</h3>
-                <p>Validar la aptitud técnica del equipamiento actual para soportar el cambio del transformador T13-261 (30 MVA) por una nueva unidad de <strong>50 MVA</strong>.</p>
-                
-                <h3>Desafíos Identificados</h3>
-                <ul>
-                    <li>Gestión de corrientes de inserción (Inrush).</li>
-                    <li>Coordinación de protecciones con mayores exigencias.</li>
-                    <li>Cumplimiento normativo COES (PR-40).</li>
-                    <li>Estado de la infraestructura civil (cárcamos).</li>
-                </ul>
-            </div>
-            <div class="img-placeholder">
-                <span>[FOTO DEL TRANSFORMADOR ACTUAL]</span>
-                <small>Insertar foto del T13-261 existente</small>
-            </div>
-        </div>
-    </div>
+    <div class="reveal">
+        <div class="slides">
 
-    <div class="slide">
-        <h1>2. Evaluación: Interruptor de Potencia 220 kV</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Datos de Placa Levantados</h3>
-                <ul>
-                    <li><strong>Marca/Modelo:</strong> ABB HPL 245-25B1</li>
-                    <li><strong>Año Fabricación:</strong> 1995 (30 años de antigüedad)</li>
-                    <li><strong>Tecnología:</strong> Gas SF6 (Tipo Puffer)</li>
-                    <li><strong>Mecanismo:</strong> Resorte (Spring), Operación Tripolar.</li>
-                </ul>
-                <div class="alert-box">
-                    <strong>DIAGNÓSTICO CRÍTICO:</strong> 
-                    El equipo presenta desgaste mecánico por fatiga en resortes y riesgo de fugas en sellos de SF6. No apto para reusar.
+            <section style="height: 80%;">
+                <div class="slide-layout-base layout-portada">
+                    <div>
+                        <h3 class="main-title">Proyecto: Ampliación 23</h3>
+                        <h1 class="sub-title">TÍTULO DE LA PRESENTACIÓN</h1> 
+                    </div>
+                    <div class="cover-details">
+                        <p style="margin: 5px 0; font-size: 0.9em;"><strong>Elaborado para:</strong><br>ISA Energia Peru SAC</p>
+                        <p style="margin: 10px 0; font-size: 0.9em;"><strong>Documento:</strong><br><span style="font-family: monospace; color: var(--brand-blue);">PE_AM23SPU-003-2025</span></p>
+                        <p style="margin: 5px 0; font-size: 0.8em; color: #666;">Enero 2026</p>
+                    </div>
                 </div>
-            </div>
-            <div class="img-placeholder">
-                <span>[FOTO DE PLACA DEL INTERRUPTOR]</span>
-                <small>Insertar foto de la placa metálica ABB del año 1995 </small>
-            </div>
-        </div>
-    </div>
+            </section>
 
-    <div class="slide">
-        <h1>2.1 Justificación de Reemplazo (Mando Sincronizado)</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Requisito Técnico (CIGRE TB 757)</h3>
-                <p>El nuevo transformador de 50 MVA generará corrientes de <em>Inrush</em> que pueden causar huecos de tensión severos.</p>
-                <ul>
-                    <li>Para mitigar esto, se requiere <strong>Mando Sincronizado (Point-on-Wave)</strong>.</li>
-                    <li>Este sistema exige un interruptor con <strong>Operación de Polo Independiente (IPO)</strong>.</li>
-                </ul>
-                <p><strong>El interruptor actual es Tripolar (Cierre simultáneo), por lo que es físicamente imposible implementar esta solución.</strong></p>
-            </div>
-            <div class="img-placeholder">
-                <span>[GRÁFICO CURVA INRUSH / CORE FLUX]</span>
-                <small>Insertar el gráfico de flujo magnético vs corriente inrush del informe </small>
-            </div>
-        </div>
-    </div>
+            <section style="height: 0%;">
+                <div class="slide-layout-base layout-indice">
+                    <h3 style="border-bottom: 2px solid #eee; padding-bottom: 1px; margin-bottom: 10px; color: var(--brand-blue);">
+                        DESARROLLO DE LOS ALCANCE
+                    </h3>
 
-    <div class="slide">
-        <h1>3. Evaluación: Relé de Protección (ABB RET670)</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Problemas Detectados</h3>
-                <ul>
-                    <li><strong>Latencia de Arranque:</strong> Tiempos excesivos de reinicio tras cortes de energía. Riesgo de "puntos ciegos" sin protección.</li>
-                    <li><strong>Degradación Hardware:</strong> Fallas en fuentes de alimentación (capacitores envejecidos).</li>
-                    <li><strong>Obsolescencia:</strong> Firmware antiguo (Ver 1.x), soporte limitado.</li>
-                </ul>
-                <div class="alert-box">
-                    <strong>ACCIÓN:</strong> Se requiere reemplazo total por una unidad de nueva generación para garantizar disponibilidad según COES.
+                    <a href="#/ayaviri" class="agenda-link">
+                        <div class="agenda-box">
+                            <span class="agenda-code">AMP 23.1</span>
+                            Ampliación Transformación SE Ayaviri 138/22.9/10 kV
+                        </div>
+                    </a>
+
+                    <a href="#/trujillo" class="agenda-link">
+                        <div class="agenda-box">
+                            <span class="agenda-code">AMP 23.2</span>
+                            Ampliación Transformación SE Trujillo N. 220/138/10 kV
+                        </div>
+                    </a>
+
+                    <a href="#/guadalupe" class="agenda-link">
+                        <div class="agenda-box">
+                            <span class="agenda-code">AMP 23.3</span>
+                            Ampliación Transformación SE Guadalupe 220/60/10 kV
+                        </div>
+                    </a>
+
+                    <a href="#/chiclayo" class="agenda-link">
+                        <div class="agenda-box">
+                            <span class="agenda-code">AMP 23.4</span>
+                            Ampliación Transformación SE Chiclayo O. 220/60/10 kV
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="img-placeholder">
-                <span>[FOTO DEL RELÉ EN TABLERO]</span>
-                <small>Insertar foto del relé ABB RET670 actual en sala de control</small>
-            </div>
+            </section>
+
+            <section id="ayaviri" style="height: 100%;">
+                <div class="slide-layout-base layout-titulo-seccion">
+                    <h4 style="color: var(--brand-cyan);">AMP 23.1</h4>
+                    <h2 style="font-size: 2.5em;">SE AYAVIRI</h2>
+                    <p style="font-size: 1.2em; color: #666;">Ampliación Transformación 138/22.9/10 kV</p>
+                    <hr style="width: 50%; margin: 20px auto; border-color: var(--brand-cyan);">
+                </div>
+            </section>
+
+            <section style="height: 0%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Hallazgos Principales: Ayaviri</h3>
+                    <ul class="custom-list">
+                        <li><strong>Transformador de Potencia:</strong> Evaluación de capacidad actual y bases para el nuevo equipo.</li>
+                        <li><strong>Celdas de Media Tensión (22.9 kV):</strong> Espacio disponible en sala de celdas.</li>
+                        <li><strong>Sistema de Protección:</strong> Verificación de tableros existentes.</li>
+                    </ul>
+                    <div class="agenda-box" style="margin-top: 30px; background: #fffde7; border-left-color: #fbc02d;">
+                        <strong>Nota:</strong> Se requiere validación de distancias de seguridad en patio de 138 kV.
+                    </div>
+                </div>
+            </section>
+             <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Registro Fotográfico: Ayaviri</h3>
+                    <div style="background: #eee; height: 300px; display:flex; align-items:center; justify-content:center; border: 2px dashed #aaa;">
+                        [FOTO PANORÁMICA AYAVIRI]
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="trujillo" style="height: 100%;">
+                <div class="slide-layout-base layout-titulo-seccion">
+                    <h4 style="color: var(--brand-cyan);">AMP 23.2</h4>
+                    <h2 style="font-size: 2.5em;">SE TRUJILLO NORTE</h2>
+                    <p style="font-size: 1.2em; color: #666;">Ampliación Transformación 220/138/10 kV</p>
+                    <hr style="width: 50%; margin: 20px auto; border-color: var(--brand-cyan);">
+                </div>
+            </section>
+
+            <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Hallazgos Principales: Trujillo Norte</h3>
+                    <ul class="custom-list">
+                        <li><strong>Patio de 220 kV:</strong> Inspección de la bahía del autotransformador.</li>
+                        <li><strong>Equipamiento:</strong> Revisión de seccionadores e interruptores existentes.</li>
+                        <li><strong>Obras Civiles:</strong> Estado de las cimentaciones y canaletas.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Evaluación de Servicios Auxiliares</h3>
+                    <p>Análisis de capacidad de los tableros de servicios auxiliares (AC/DC) para soportar las nuevas cargas de la ampliación.</p>
+                    <div style="background: #eee; height: 250px; margin-top: 20px; display:flex; align-items:center; justify-content:center; border: 2px dashed #aaa;">
+                        [FOTO SALA DE TABLEROS]
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="guadalupe" style="height: 100%;">
+                <div class="slide-layout-base layout-titulo-seccion">
+                    <h4 style="color: var(--brand-cyan);">AMP 23.3</h4>
+                    <h2 style="font-size: 2.5em;">SE GUADALUPE</h2>
+                    <p style="font-size: 1.2em; color: #666;">Ampliación Transformación 220/60/10 kV</p>
+                    <hr style="width: 50%; margin: 20px auto; border-color: var(--brand-cyan);">
+                </div>
+            </section>
+
+            <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Evaluación Técnica: Guadalupe</h3>
+                    <div class="agenda-box" style="border-left-color: tomato; background: #fff5f5;">
+                        <strong>Interruptor 220 kV (INT-2170):</strong>
+                        <br>Tecnología antigua (1995) con mando tripolar. 
+                        <br><strong>Acción:</strong> Reemplazo obligatorio por equipo con mando independiente (IPO) para control de Inrush.
+                    </div>
+                    <div class="agenda-box" style="border-left-color: orange; background: #fffcf0;">
+                        <strong>Protección Diferencial (RET670):</strong>
+                        <br>Equipo obsoleto con fallas de arranque. Se requiere modernización.
+                    </div>
+                </div>
+            </section>
+            
+            <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Infraestructura Civil: Guadalupe</h3>
+                    <p>La inspección visual determina la saturación de los cárcamos existentes.</p>
+                    <ul>
+                        <li>No existe reserva física para el tendido de nuevos cables de control.</li>
+                        <li>Se requiere proyectar ampliación de canaletas antes del montaje.</li>
+                    </ul>
+                    <div style="background: #eee; height: 200px; margin-top: 20px; display:flex; align-items:center; justify-content:center; border: 2px dashed #aaa;">
+                        [FOTO CÁRCAMOS SATURADOS]
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="chiclayo" style="height: 100%;">
+                <div class="slide-layout-base layout-titulo-seccion">
+                    <h4 style="color: var(--brand-cyan);">AMP 23.4</h4>
+                    <h2 style="font-size: 2.5em;">SE CHICLAYO OESTE</h2>
+                    <p style="font-size: 1.2em; color: #666;">Ampliación Transformación 220/60/10 kV</p>
+                    <hr style="width: 50%; margin: 20px auto; border-color: var(--brand-cyan);">
+                </div>
+            </section>
+
+            <section style="height: 100%;">
+                <div class="slide-layout-base layout-contenido">
+                    <h3>Hallazgos Principales: Chiclayo Oeste</h3>
+                    <ul class="custom-list">
+                        <li><strong>Ubicación de nuevo Transformador:</strong> Verificación del área disponible en el patio.</li>
+                        <li><strong>Interconexión 60 kV:</strong> Evaluación de las barras existentes y capacidad de ampliación.</li>
+                        <li><strong>Sistemas de Comunicaciones:</strong> Disponibilidad de puertos en switches y RTU.</li>
+                    </ul>
+                     <div style="margin-top: 40px; text-align: center; color: #888; font-size: 0.8em;">
+                        *** FIN DE LA PRESENTACIÓN ***
+                    </div>
+                </div>
+            </section>
+
         </div>
     </div>
 
-    <div class="slide">
-        <h1>4. Normativa y Obras Civiles</h1>
-        <div class="two-columns">
-            <div>
-                <h3>Registrador de Fallas (COES PR-40)</h3>
-                <p>Para transformadores &ge; 50 MVA es <strong>OBLIGATORIO</strong> contar con un Registrador de Fallas dedicado.</p>
-                
-                <h3>Infraestructura Civil</h3>
-                <ul>
-                    <li><strong>Hallazgo:</strong> Cárcamos de cables sobrecargados en nivel 10kV.</li>
-                    <li><strong>Solución:</strong> Construcción de nuevas canalizaciones y un nuevo tablero MK <em>antes</em> del desmontaje para reducir tiempo de parada.</li>
-                </ul>
-            </div>
-            <div class="img-placeholder">
-                <span>[FOTO DE CÁRCAMOS / CANALETAS]</span>
-                <small>Insertar foto mostrando la saturación de cables o el deterioro </small>
-            </div>
-        </div>
-    </div>
-
-    <div class="slide">
-        <h1>5. Conclusiones y Resumen de Cambios</h1>
-        <table style="font-size: 1.1rem;">
-            <thead>
-                <tr>
-                    <th>Equipo</th>
-                    <th>Estado Actual</th>
-                    <th>Acción Requerida</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Interruptor 220kV</strong></td>
-                    <td>Antiguo (1995), Tripolar</td>
-                    <td><strong>REEMPLAZAR</strong> por uno con Polo Independiente (IPO).</td>
-                </tr>
-                <tr>
-                    <td><strong>Relé Protección</strong></td>
-                    <td>Falla arranque, Obsoleto</td>
-                    <td><strong>REEMPLAZAR</strong> por nueva tecnología.</td>
-                </tr>
-                <tr>
-                    <td><strong>Registrador Fallas</strong></td>
-                    <td>No existente para esta capacidad</td>
-                    <td><strong>IMPLEMENTAR</strong> (Norma COES PR-40).</td>
-                </tr>
-                 <tr>
-                    <td><strong>Tablero MK</strong></td>
-                    <td>Ubicación a modificar</td>
-                    <td><strong>CONSTRUIR NUEVO</strong> anticipadamente.</td>
-                </tr>
-            </tbody>
-        </table>
-        <div style="margin-top: 20px; text-align: center; color: var(--primary); font-weight: bold;">
-            EL PROYECTO ES VIABLE EJECUTANDO ESTAS ADECUACIONES.
-        </div>
-    </div>
-
-    <div class="nav-buttons">
-        <button onclick="prevSlide()">❮ Anterior</button>
-        <button onclick="nextSlide()">Siguiente ❯</button>
-    </div>
-    <div class="slide-number" id="slideNum">1 / 7</div>
-
-</div>
-
-<script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const slideNum = document.getElementById('slideNum');
-
-    function showSlide(n) {
-        slides.forEach(s => s.classList.remove('active'));
-        slides[n].classList.add('active');
-        slideNum.textContent = `${n + 1} / ${slides.length}`;
-    }
-
-    function nextSlide() {
-        if (currentSlide < slides.length - 1) {
-            currentSlide++;
-            showSlide(currentSlide);
-        }
-    }
-
-    function prevSlide() {
-        if (currentSlide > 0) {
-            currentSlide--;
-            showSlide(currentSlide);
-        }
-    }
-
-    // Teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === "ArrowRight") nextSlide();
-        if (e.key === "ArrowLeft") prevSlide();
-    });
-</script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({ 
+            hash: true, 
+            slideNumber: true, 
+            transition: 'slide',
+            center: false,
+            height: 700,
+            width: 960
+        });
+    </script>
 </body>
 </html>
